@@ -159,3 +159,119 @@ export default defineConfig({
 }
 
 })
+
+## 五、postcss的配置
+
+在vite内是完全兼容postcss的，我们只需要安装一个postcss-preset-env来配置一些我们的postcss预处理，确认我们postcss默认都要干那些事情
+
+import  { defineConfig }  from  'vite'	
+
+//首先导入我们安装的postcss-preset-env 默认需要postcss处理的配置预选项
+
+import  postcssPresetEnv from 'postcss-preset-env'
+
+export default=defineConfig({
+
+​	//然后配置我们的postcss 里面的plugins数组将我们的导入的postcssPresetEnv放入即可	
+
+​		postcss:{
+
+​				plugins:[ 
+
+​					postcssPresetEnv ()
+
+]
+
+}
+
+})
+
+### postcss.config.js
+
+我们也可以去使用单独的postcss.config.js,vite会自动的去寻找个根目录下的这个文件并读取里面对于postcss的配置。
+
+const postcssPresetEnv=require('postcss-preset-env');
+
+module.exports={
+
+​		plugins:[
+
+​			postcssPresetEnv()
+
+]
+
+}
+
+## 六、resolve相对路径的配置
+
+import { defineConfig } from 'vite'
+
+//我们先导入commonjs的path模块的resolve方法
+
+import { resolve } from 'path'
+
+export default=defineConfig({
+
+//然后我们配置resolve的alias对象属性在里面指定我们特定的相对路径
+
+​		resolve:{
+
+​			alias:{
+
+​				"@":resolve(__dirname,"../")
+
+}
+
+}
+
+})
+
+## 七、生产环境build的配置
+
+import { defineConfig } from 'vite'
+
+export default=defineConfig({
+
+​		build:{
+
+//因为我们vite在打包生产环境是依赖我们的rollup的，因为开箱即用所以vite自己配置了一套默认的配置，如果我们要修改就要在rollupOptions对象属性去配置一些特有的属性
+
+​			rollupOptions:{
+
+​				output:{
+
+​						assetFileName:"[hash].[name].[ext]"
+
+}
+
+},
+
+//assetInlineLimit可以帮我们去分辨如果小于后面给的值的静态文件帮我们转换为base64
+
+​			assetInlineLimit:xxx,
+
+//outDir可以让我们去配置打包好的文件存放的文件名
+
+​			outDir:xxx，
+
+//assetsDir可以让我们去配置js存放目录的名称
+
+​			assetsDir:""
+
+}
+
+})
+
+## 八、svg的配置和导入资源的路径配置
+
+vite原生的支持我们的svg无需去做其他的配置。
+
+### 路径参数
+
+我们去导入我们的文件的时候可以在后面添加参数表示其导入格式
+
+?url 表示按相对的路径给其
+
+?raw 我们所有的文件在最原始的时候都是二进制流也就是buffer，这里就是将导入文件原生的二进制交出来
+
+?worker 这里表示导入的文件是一个worker脚本
