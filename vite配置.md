@@ -275,3 +275,26 @@ vite原生的支持我们的svg无需去做其他的配置。
 ?raw 我们所有的文件在最原始的时候都是二进制流也就是buffer，这里就是将导入文件原生的二进制交出来
 
 ?worker 这里表示导入的文件是一个worker脚本
+
+## 九、plugins插件的配置
+
+import { defineConfig } from 'vite'
+
+//导入我们所需的插件
+
+import { xxx } from 'xxx'
+
+export default=defineConfig({
+
+​		plugins:[
+
+​			//里面放置我们需要的插件，插件都是义函数的形式去调用
+
+​			如果我们需要指定插件的执行顺序我们需要使用一个大括号将插件调用包起来,并配置一个enforce属性去配置顺序
+
+]
+
+})
+
+此外我们还可以自定义插件 ， vite给我们提供了许多的生命周期钩子让我们去设计我们的插件，详情可见官网
+
